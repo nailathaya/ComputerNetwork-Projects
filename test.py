@@ -1,4 +1,6 @@
-print("Hello World 1")
+print("NYOBA AJA")
+
+
 
 # Import modul socket untuk membuat server TCP sederhana 
 import socket 
