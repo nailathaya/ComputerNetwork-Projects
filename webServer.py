@@ -3,17 +3,13 @@ from socket import *
 
 # import modul threading agar bisa meng-handle banyak client
 import threading 
-
+import mimetypes as mt
 # membuat fungsi content-type
-def contentType(headers):
-
-    # Mencari content-type dari header
-    for header in headers:
-        if header.lower().startswith('content-type'):
-            content_type = header.split(': ')[1].strip()
-            return content_type
-
-    return 'text/html'
+def getType(file_path):
+    # mencari tahu tipe konten dari file yang direquest oleh client
+    # menggunakan library mimetypes
+    content_type, _ = mt.guess_type(file_path)
+    return content_type if content_type else 'application/octet-stream'
 
 # membuat fungsi handle_client
 def handle_client(client_connection):
@@ -37,7 +33,8 @@ def handle_client(client_connection):
             content = file.read()
 
         # mengambil content-type dari request client
-        content_type = contentType(headers)
+        content_type = getType(file_requested)
+        print(content_type)
         
         # membuat response header dengan kode 200 OK dan tipe content
         response_header = f'HTTP/1.0 200 OK\nContent-Type: {content_type}\n\n'.encode()
