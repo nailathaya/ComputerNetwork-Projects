@@ -11,7 +11,8 @@ satu waktu. Server web harus
 2. Saat ini, server web hanya menangani satu request HTTP pada satu waktu. Implementasikan 
 sebuah server multithread yang mampu melayani beberapa requests secara simultan. Dengan 
 menggunakan threading, pertama-tama buat sebuah thread utama di mana server yang 
-dimodifikasi listens klien pada port tertentu. Ketika menerima request koneksi TCP dari 
+dimodifikasi listens klien pada port tertentu. 
+Ketika menerima request koneksi TCP dari 
 seorang klien, server akan menyiapkan koneksi TCP melalui port lain dan melayani 
 permintaan klien dalam sebuah thread terpisah. Akan ada sebuah koneksi TCP terpisah 
 dalam sebuah utas terpisah untuk setiap pasangan permintaan/respons.

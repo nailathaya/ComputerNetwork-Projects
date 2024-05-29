@@ -1,93 +1,49 @@
-# import modul socket untuk membuat server TCP sederhana 
-from socket import *
+import socket
+import threading
 
-# import modul threading agar bisa meng-handle banyak client
-import threading 
+def handle_client(client_socket):
+    request = client_socket.recv(1024).decode('utf-8')
+    print(f"Received request: {request}")
 
-# membuat fungsi content-type
-def contentType(headers):
-
-    # Mencari content-type dari header
-    for header in headers:
-        if header.lower().startswith('content-type'):
-            content_type = header.split(': ')[1].strip()
-            return content_type
-
-    return 'text/html'
-
-# membuat fungsi handle_client
-def handle_client(client_connection):
-    # menerima request dan mendecode permintaan
-    request = client_connection.recv(1024).decode()
-    print(request)
-
-    #melakukan split header per baris
+    # Parse HTTP request
     headers = request.split('\n')
+    filename = headers[0].split()[1]
+    if filename == '/':
+        filename = '/index.html'
 
-    # mendapatkan file yang diminta pada header baris pertama
-    file_requested = headers[0].split()[1]
-
-    # jika request yang diminta mengandung '/', maka diganti dengan '/index.html'
-    if file_requested == '/':
-        file_requested = '/index.html'
+    # Remove leading slash
+    filename = filename[1:]
 
     try:
-        # membuka file yang diminta oleh client
-        with open('./data/'+ file_requested[1:], 'rb') as file:
+        with open(filename, 'rb') as file:
             content = file.read()
 
-        # mengambil content-type dari request client
-        content_type = contentType(headers)
-        
-        # membuat response header dengan kode 200 OK dan tipe content
-        response_header = f'HTTP/1.0 200 OK\nContent-Type: {content_type}\n\n'.encode()
-        response_content = content
-        client_connection.send(response_header+response_content)
+        response = b'HTTP/1.1 200 OK\r\n'
+        response += b'Content-Type: text/html\r\n'
+        response += b'Content-Length: ' + str(len(content)).encode('utf-8') + b'\r\n'
+        response += b'\r\n'
+        response += content
+
     except FileNotFoundError:
+        response = b'HTTP/1.1 404 Not Found\r\n'
+        response += b'Content-Type: text/html\r\n'
+        response += b'\r\n'
+        response += b'<html><body><h1>404 Not Found</h1></body></html>'
 
-        # jika file tidak ditemukan, buat response dengan kode 404 NOT FOUND
-        response_header = 'HTTP/1.0 404 NOT FOUND\n\nFile Not Found'.encode()
-        response_content = b''
-        client_connection.send(response_header+response_content)
-    client_connection.close()
+    client_socket.send(response)
+    client_socket.close()
 
-# membuat fungsi run_server 
-def run_server(server_hostname, server_port):
-    # membuat socket server
-    serverSocket = socket(AF_INET, SOCK_STREAM)
+def main():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(('0.0.0.0', 8080))
+    server.listen(5)
+    print("Server listening on port 8080")
 
-    # mengaitkan antara serverPort dan ServerHostname
-    serverSocket.bind((server_hostname, server_port))
-
-    # mendengarkan koneksi dari client
-    serverSocket.listen(1)
-
-    # mencetak string sebagai penanda dimulainya koneksi server
-    print(f'[*] Listening on {server_hostname}:{server_port}...')
     while True:
-        # server menerima koneksi baru dari client
-        client_connection, client_address = serverSocket.accept()
-
-        # mencetak string sebagai penanda server menerima koneksi dari client
-        print(f"[*] Accepted connection from {client_address[0]}:{client_address[1]}")
-        
-         # menghandle banyak request browser dalam 1 waktu
-        client_handler = threading.Thread(target=handle_client, args=(client_connection,))
+        client_socket, addr = server.accept()
+        print(f"Accepted connection from {addr}")
+        client_handler = threading.Thread(target=handle_client, args=(client_socket,))
         client_handler.start()
 
-# membuat fungsi main()
-def main():
-
-    # inisialisasi 'localhost' sebagai alamat host
-    server_hostname = 'localhost'  
-
-    # Inisialisasi 5555 sebagai alamat port
-    server_port = 5555 
-    
-    # memulai server dengan host dan port yang ditentukan
-    run_server(server_hostname, server_port)
-
-# Memanggil fungsi main
-main()
-
-
+if __name__ == "__main__":
+    main()
