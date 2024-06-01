@@ -1,6 +1,7 @@
 import socket
 import sys
 
+# Fungsi untuk client mengirim request ke server
 def http_client(server_host, server_port, path):
     # Membuat socket objek baru
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
