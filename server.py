@@ -47,7 +47,7 @@ def handle_client(client_socket):
     client_socket.close()
 
 def main():
-    # Membuat objek socket untuk server menggunakan alamat AF_INET dan tipe socket SOCK_STREAM untuk koneksi TCP.
+    # Membuat objek socket untuk server menggunakan alamat AF_INET dan tipe socket SOCK_STREAM untuk koneksi TCP
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Mengikat server ke alamat 127.0.0.1 (localhost) pada port 8080
