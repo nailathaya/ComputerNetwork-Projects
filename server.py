@@ -35,7 +35,7 @@ def handle_client(client_socket):
 
     except FileNotFoundError:
         # Membuat respons HTTP dengan status 404 Not Found
-        response = 'HTTP/1.1 404 NOT FOUND\n\nFile Not Found'
+        response = 'HTTP/1.1 404 NOT FOUND\n\n404 Not Found'
         
         # Mengubah respons string menjad bytes
         response = response.encode('utf-8')
