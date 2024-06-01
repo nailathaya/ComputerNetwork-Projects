@@ -17,7 +17,7 @@ def http_client(server_host, server_port, path):
     # Menerima respons dari server (permintaan diterima atau file path tidak ditemukan.)
     response = b""                           # Menginisialisasi variabel response dengan string kosong berupa bytes
     while True:                              # Melakukan looping
-        part = client_socket.recv(1024)      # Menerima respons dari server
+        part = client_socket.recv(2048)      # Menerima respons dari server
         if not part:                         # Jika respons yang diterima bukan respons
             break                            # bukan respons dari server, maka loop berhenti
         response += part                     # tambahkan part dalam bentuk bytes tersebut ke variabel response
