@@ -32,8 +32,8 @@ if __name__ == "__main__":
     # Permisalan panjang argumen (termasuk nama script, contoh: "client.py") 
     # tidak sepanjang 4, maka beri pemberitahuan cara penggunaan yang benar.
     if len(sys.argv) != 4: 
-        print("Usage: py client.py <server_host> <server_port> <path>")
-        sys.exit(1)
+        print("Cara Penggunaan: py client.py <server_host> <server_port> <path>")
+        sys.exit(1) # Menghentikan eksekusi dan client dapat mengeksekusi kembali client.py dengan penggunaan argumen yang benar
 
     server_host = sys.argv[1]          # Inisialisasi argumen 1 = <server host> ke dalam server_host
     server_port = int(sys.argv[2])     # Inisialisasi argumen 2 = <server port> ke dalam server_port
