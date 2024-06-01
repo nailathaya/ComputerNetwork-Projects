@@ -28,7 +28,7 @@ def http_client(server_host, server_port, path):
     # Mengoutputkan response dalam bentuk string
     print(response.decode('utf-8'))
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     # Permisalan panjang argumen (termasuk nama script, contoh: "client.py") 
     # tidak sepanjang 4, maka beri pemberitahuan cara penggunaan yang benar.
     if len(sys.argv) != 4: 
