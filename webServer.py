@@ -24,7 +24,7 @@ def handle_client(client_socket):
     try:
         # Membuka file dengan nama yang diperoleh dalam mode baca-biner (rb)
         with open(filename, 'rb') as file:
-            content = file.read()
+            content = file.read()  # Membaca isi file
 
         # Membuat respons HTTP dengan status 200 OK
         response = 'HTTP/1.1 200 OK\r\n'
