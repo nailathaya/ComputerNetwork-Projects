@@ -15,12 +15,12 @@ def http_client(server_host, server_port, path):
     client_socket.sendall(request.encode())
 
     # Menerima respons dari server (permintaan diterima atau file path tidak ditemukan.)
-    response = b""                           # Menginisialisasi variabel response dengan string kosong berupa bytes
-    while True:                              # Melakukan looping
-        part = client_socket.recv(1024)      # Menerima respons dari server
-        if not part:                         # Jika respons yang diterima bukan respons
-            break                            # bukan respons dari server, maka loop berhenti
-        response += part                     # tambahkan part dalam bentuk bytes tersebut ke variabel response
+    response = b""                       # Menginisialisasi variabel response dengan string kosong berupa bytes
+    while True:                          # Melakukan looping
+        part = client_socket.recv(1024)  # Menerima respons dari server
+        if not part:                     # Jika respons yang diterima bukan respons
+            break                        # bukan respons dari server, maka loop berhenti
+        response += part                 # tambahkan part dalam bentuk bytes tersebut ke variabel response
 
     # Menutup koneksi dengan server
     client_socket.close()
@@ -33,11 +33,14 @@ if __name__ == "__main__":
     # tidak sepanjang 4, maka beri pemberitahuan cara penggunaan yang benar.
     if len(sys.argv) != 4: 
         print("Cara Penggunaan: py client.py <server_host> <server_port> <path>")
-        sys.exit(1) # Menghentikan eksekusi dan client dapat mengeksekusi kembali client.py dengan penggunaan argumen yang benar
+        # Menghentikan eksekusi dan client dapat mengeksekusi kembali client.py 
+        # dengan penggunaan argumen yang benar
+        sys.exit(1) 
 
     server_host = sys.argv[1]          # Inisialisasi argumen 1 = <server host> ke dalam server_host
     server_port = int(sys.argv[2])     # Inisialisasi argumen 2 = <server port> ke dalam server_port
     path = sys.argv[3]                 # Inisialisasi argumen 3 = <path> ke dalam path
 
-    # Memanggil fungsi http client dengan argumen server host, server port, dan path yang akan di request ke server
+    # Memanggil fungsi http client dengan argumen server host, server port, 
+    # dan path yang akan di request ke server
     http_client(server_host, server_port, path)
