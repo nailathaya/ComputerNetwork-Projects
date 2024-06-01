@@ -37,7 +37,6 @@ def handle_client(client_socket):
         # Membuat respons HTTP dengan status 404 Not Found
         response = 'HTTP/1.1 404 Not Found\r\n'
 
-
         # Mengubah respons string menjad bytes
         response = response.encode('utf-8')
 
