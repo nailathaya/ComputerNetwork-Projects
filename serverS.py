@@ -1,3 +1,4 @@
+# SINGLE THREAD
 # Mengimpor modul socket untuk memungkinkan komunikasi jaringan
 import socket
 
