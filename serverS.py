@@ -66,7 +66,7 @@ def main():
 
         # Hanya Menangani permintaan klien
         handle_client(client_socket)
-
+        
 # Memeriksa apakah skrip sedang dijalankan sebagai program utama atau diimpor sebagai modul ke dalam skrip lain
 if __name__ == "__main__":
     main()
