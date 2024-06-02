@@ -45,14 +45,14 @@ def main():
     # Mencetak pesan bahwa server sedang mendengarkan pada server port
     print(f"Server listening on port {serverport}")
 
-    
-    # Menerima koneksi masuk dan mengembalikan socket klien dan alamatnya
-    client_socket, addr = server.accept()
-    # Mencetak pesan bahwa koneksi dari alamat tertentu telah diterima
-    print(f"Accepted connection from {addr}")
-    # Menangani permintaan klien
-    handle_client(client_socket)
-    server.close()
+    while True:
+        # Menerima koneksi masuk dan mengembalikan socket klien dan alamatnya
+        client_socket, addr = server.accept()
+        # Mencetak pesan bahwa koneksi dari alamat tertentu telah diterima
+        print(f"Accepted connection from {addr}")
+        # Menangani permintaan klien
+        handle_client(client_socket)
+        
 # Memeriksa apakah skrip sedang dijalankan sebagai program utama atau diimpor sebagai modul ke dalam skrip lain
 if __name__ == "__main__":
     main()
