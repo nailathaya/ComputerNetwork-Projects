@@ -9,7 +9,7 @@ import threading
 def handle_client(client_socket): 
     # Menerima permintaan dari klien hingga 1024 byte dan mendekodekannya dari bytes ke string UTF-8
     request = client_socket.recv(1024).decode('utf-8')
-
+    print('edit di server.py')
     # Mencetak permintaan yang diterima dari klien
     print(f"Received request: {request}")
 
